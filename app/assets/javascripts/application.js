@@ -70,3 +70,15 @@ ShowHide.prototype = {
     $(this.openSelector).data("allOpen", false)
   }
 }
+
+function do_switch(previewer, appender, tab){
+  $(previewer).empty().append($(appender).html());
+  $('.tab').each(function(i, elem){
+    $(elem).addClass('inactive');
+    $(elem).removeClass('active');
+  });
+  $(tab).parent().removeClass('inactive');
+  $(tab).parent().addClass('active');
+  $(document).click();
+  return false;
+}

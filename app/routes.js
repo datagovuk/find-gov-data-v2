@@ -7,5 +7,12 @@ router.get('/', function (req, res) {
 })
 
 // add your routes here
+var data = require('./data.js')
+
+
+router.use(function(req,res,next){
+  res.locals.data = data
+  next()
+})
 
 module.exports = router
