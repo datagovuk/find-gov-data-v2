@@ -1,64 +1,117 @@
 {% extends "layout.html" %}
 
+
 {% block page_title %}
-  GOV.UK prototype kit
+  Find UK government data
 {% endblock %}
 
 {% block content %}
 
 <main id="content" role="main">
+
+  <div class="masthead">
+
+    <div class="grid-row">
+
+      <div class="column-two-thirds">
+        <h1 class="heading-xlarge">
+          Find UK government data
+        </h1>
+
+        <p class="lede">
+          You can use this data to learn more about how government
+          works, carry out research or build applications and services
+        </p>
+      </div>
+
+      <form id="search-form" action="results" method="GET" class="column-two-thirds">
+        <fieldset>
+          <div id="search-box">
+            <input id="q" name="q" type="text" placeholder="" class="form-control search" autocomplete="off"/><button type="submit" class="search-submit">Find data</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+
   <div class="grid-row">
     <div class="column-two-thirds">
 
-      <h1 class="heading-xlarge">
-        The GOV.UK prototype kit
-        <span class="heading-secondary">{{releaseVersion}}</span>
-      </h1>{{releaseVersion | log }}
-      <p>
-        This kit lets you rapidly create HTML prototypes of GOV.UK services.
-      </p>
-
-      <p>
-        It contains all you need to prototype anything from simple static pages to complex, data-driven transactions.
-      </p>
-
-      <h2 class="heading-medium">About this page</h2>
-
-      <p>We recommend you add links to your prototype to this page, rather than delete it.
-        You'll find this page in the kit at '/app/views/index.html'.</p>
-      <p>You can change the service name by editing the file '/app/config.js'.</p>
-
-			<h2 class="heading-medium">Examples and documentation</h2>
-
-			<ul class="list list-bullet">
-				<li><a href="/docs/tutorials-and-examples">Example pages and documentation</a></li>
-				<li><a href="https://github.com/alphagov/govuk_prototype_kit">GitHub</a></li>
-			</ul>
-
-      <h2 class="heading-medium">Other resources</h2>
-
-			<ul class="list list-bullet">
-				<li>
-					<a href="https://govuk-elements.herokuapp.com/snippets/">
-						Guide to GOV.UK Elements
-					</a>
-				</li>
-				<li>
-					<a href="https://www.gov.uk/service-manual">
-						Service design manual
-					</a>
-				</li>
-				<li>
-					<a href="https://www.gov.uk/design-principles">
-						Government Digital Service Design Principles
-					</a>
-				</li>
-			</ul>
-
+      <h1 class="heading-large">
+        Browse collections
+        <span class="heading-secondary">Collections are curated datasets related to a specific topic</span>
+      </h1>
     </div>
   </div>
+
+  <div class="grid-row">
+    <div class="column-one-half">
+      <h1 class="heading-medium">
+        <a href="/collections/registers">Registers</a>
+        <p>Get authorative, high-quality datasets</p>
+      </h1>
+    </div>
+    <div class="column-one-half">
+      <h1 class="heading-medium">
+        <a href="/collections/flooding">Flooding</a>
+        <p>Datasets related to the recent floods</p>
+      </h1>
+    </div>
+  </div>
+
+  <hr/>
+
+  <div class="grid-row">
+    <div class="column-one-half">
+
+      <h1 class="heading-large">
+        Trending/Popular datasets
+        <span class="heading-secondary">The most popular datasets from the last week</span>
+      </h1>
+
+      <h1 class="heading-medium">
+        <a href="/dataset/cats">Cats per square kilometer</a>
+        <p>Describes the mean number of cats per square kilometer on the OS grid</p>
+      </h1>
+      <hr/>
+
+      <h1 class="heading-medium">
+        <a href="/dataset/dogs">Dogs per square kilometer</a>
+        <p>Describes the mean number of dogs per square kilometer on the OS grid</p>
+      </h1>
+      <hr/>
+
+      <h1 class="heading-medium">
+        <a href="/dataset/dogs">Mice reports from 125 Kingsway</a>
+        <p>Reports of 'mus musculus' in 2017</p>
+      </h1>
+      <hr/>
+    </div>
+
+    <div class="column-one-half">
+
+      <h1 class="heading-large">
+        Upcoming datasets
+        <span class="heading-secondary">Datasets due for release in the near future</span>
+      </h1>
+
+      <h1 class="heading-medium">
+        <a href="/dataset/cats">Guinea Pigs per square kilometer</a>
+        <p>Describes the mean number of guinea pigs per square kilometer on the OS grid</p>
+        <p class="heading-secondary">
+          Due: June 2017
+          <a style="float:right;" href="">Alert me</a>
+        </p>
+      </h1>
+      <hr style="clear:both;"/>
+
+    </div>
+
+  </div>
+
+
+
+
 </main>
 
 {% endblock %}
-
-

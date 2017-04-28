@@ -13,7 +13,9 @@ router.get('/', function (req, res) {
   res.render('index')
 })
 
-
-
+router.use(function(req,res,next){
+  res.locals.data = data
+  next()
+})
 
 module.exports = router
