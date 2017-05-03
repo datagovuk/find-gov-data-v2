@@ -212,14 +212,16 @@
 
                 <legend class="visually-hidden">Was this page useful for you?</legend>
 
-                <div class="multiple-choice">
+                <div class="multiple-choice" data-target="helpful">
                   <input id="radio-inline-1" type="radio" name="radio-inline-group" value="Yes">
                   <label for="radio-inline-1">Yes</label>
                 </div>
+
                 <div class="multiple-choice" data-target="not-helpful">
                   <input id="radio-inline-2" type="radio" name="radio-inline-group" value="No">
                   <label for="radio-inline-2">No</label>
                 </div>
+
                 <div class="panel panel-border-narrow js-hidden" id="not-helpful">
                   <div class="multiple-choice">
                     <input id="" name="" type="checkbox" value="true">
@@ -252,6 +254,9 @@
                   <input class="button" type="submit" value="Submit">
                 </div>
 
+                <div class="js-hidden" id="helpful">
+                  <input class="button" type="submit" value="Submit">
+                </div>
 
               </fieldset>
             </div>
