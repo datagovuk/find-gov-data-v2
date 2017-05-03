@@ -39,7 +39,7 @@ $path: "/public/images/";
 }
 
 .heading-large {
-  margin-top: 70px;
+  margin-top: 1.5em;
   margin-bottom: 40px;
 }
 
@@ -161,7 +161,6 @@ details {
 // Search results styling
 
 main.results-page#content {
-  max-width: 100%;
   .grid-row {
     max-width: 960px;
     margin: auto;
@@ -169,9 +168,10 @@ main.results-page#content {
 }
 
 main.results-page#content .grid-row.masthead {
+  padding: 0 1.5em 2em 1.5em;
+  margin-bottom: 1.0em;
   max-width: 100%;
   background: #F8F8F8;
-  padding: 70px 0;
   .column-full {
     max-width: 960px;
     margin: auto;
@@ -202,12 +202,13 @@ main.results-page#content .grid-row.masthead {
 }
 
 .filters {
+  margin-top: 2em;
   p {
     margin-bottom: 10px;
   }
   .form-control {
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 1em;
   }
   input.button {
     margin-top: 30px;
@@ -219,11 +220,10 @@ main.results-page#content .grid-row.masthead {
   width: 49%;
 }
 
-.masthead {
-    margin: 0;
-    background: #eee;
-    padding: 0 1.5em 2em 1.5em;
-}
+// .masthead {
+//     margin: 0;
+//     background: #eee;
+// }
 
 /* Facet block */
 .filter-block {
@@ -463,6 +463,6 @@ a:focus {
 
 .prototype-picker {
   .button {
-    margin-bottom:0.5em;
+    margin-bottom: 0.5em;
   }
 }

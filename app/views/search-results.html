@@ -8,112 +8,44 @@
 
 <main class="results-page" id="content" role="main">
   <div class="grid-row masthead">
-    <div class="column-full">
-          <h1 class="heading-large">Search data.gov.uk</h1>
-          <label class="form-label" for="full-name-f1">Search by name, publisher or year</label>
-          <input class="form-control" id="full-name-f1" type="text">
+    <div class="column-two-thirds">
+      <h1 class="heading-large">Search data.gov.uk</h1>
+      <label class="form-label" for="full-name-f1">Search by name, publisher or year</label>
+      <input class="search form-control" id="full-name-f1" type="text"><button type="submit" class="search-submit">Find data</button>
     </div>
   </div>
   <div class="grid-row">
     <div class="column-two-thirds">
-      <h2 class="heading-medium">300 results match "House prices in the UK"</h2>
-      <div class="result">
-        <a href="datasets/price-paid"><h2 class="heading-medium">HM Land Registry Price Paid Data</h2></a>
-        <dl class="metadata">
-              <dt>Published by:</dt>
-              <dd><a href="">Land Registry</a></dd>
-              <dt>Last updated:</dt>
-              <dd><a href="">05 April 2017</a></dd>
-              <dt>Geographical area:</dt>
-              <dd>Surrey (Local Authority)</dd>
-            </dl>
-        <p>Price Paid Data tracks the residential property sales in England and Wales that are lodged with HM Land Registry for registration.</p>
-      </div>
-      <div class="result">
-        <h2 class="heading-medium">HM Land Registry Price Paid Data</h2>
-        <dl class="metadata">
-              <dt>Published by:</dt>
-              <dd><a href="">Land Registry</a></dd>
-              <dt>Last updated:</dt>
-              <dd>05 April 2017</dd>
-              <dt>Geographical area:</dt>
-              <dd>Surrey (Local Authority)</dd>
-            </dl>
-        <p>Price Paid Data tracks the residential property sales in England and Wales that are lodged with HM Land Registry for registration.</p>
-      </div>
-      <div class="result">
-        <h2 class="heading-medium">HM Land Registry Price Paid Data</h2>
-        <dl class="metadata">
-              <dt>Published by:</dt>
-              <dd><a href="">Land Registry</a></dd>
-              <dt>Last updated:</dt>
-              <dd>05 April 2017</dd>
-              <dt>Geographical area:</dt>
-              <dd>Surrey (Local Authority)</dd>
-            </dl>
-        <p>Price Paid Data tracks the residential property sales in England and Wales that are lodged with HM Land Registry for registration.</p>
-      </div>
-      <div class="result">
-        <h2 class="heading-medium">HM Land Registry Price Paid Data</h2>
-        <dl class="metadata">
-              <dt>Published by:</dt>
-              <dd><a href="">Land Registry</a></dd>
-              <dt>Last updated:</dt>
-              <dd>05 April 2017</dd>
-              <dt>Geographical area:</dt>
-              <dd>Surrey (Local Authority)</dd>
-            </dl>
-        <p>Price Paid Data tracks the residential property sales in England and Wales that are lodged with HM Land Registry for registration.</p>
-      </div>
-      <div class="result">
-        <h2 class="heading-medium">HM Land Registry Price Paid Data</h2>
-        <dl class="metadata">
-              <dt>Published by:</dt>
-              <dd><a href="">Land Registry</a></dd>
-              <dt>Last updated:</dt>
-              <dd>05 April 2017</dd>
-              <dt>Geographical area:</dt>
-              <dd>Surrey (Local Authority)</dd>
-            </dl>
-        <p>Price Paid Data tracks the residential property sales in England and Wales that are lodged with HM Land Registry for registration.</p>
-      </div>
-      <div class="result">
-        <h2 class="heading-medium">HM Land Registry Price Paid Data</h2>
-        <dl class="metadata">
-              <dt>Published by:</dt>
-              <dd><a href="">Land Registry</a></dd>
-              <dt>Last updated:</dt>
-              <dd>05 April 2017</dd>
-              <dt>Geographical area:</dt>
-              <dd>Surrey (Local Authority)</dd>
-            </dl>
-        <p>Price Paid Data tracks the residential property sales in England and Wales that are lodged with HM Land Registry for registration.</p>
-      </div>
-      <div class="related-searches">
-        <h2 class="heading-medium">Searches related to "Housing data UK"</h2>
-        <ul>
-          <li><a href="">Land registry price</a></li>
-          <li><a href="">Mortgage prices in the UK</a></li>
-          <li><a href="">House rentals UK</a></li>
-          <li><a href="">Cost of living</a></li>
-          <li><a href="">Council tax bands</a></li>
-          <li><a href="">Utillity costs</a></li>
-        </ul>
-      </div>
+      <span class="bold-xlarge">356</span> results for <span class="bold-small">broadband</span>
     </div>
+  </div>
+  <div class="grid-row">
     <div class="column-one-third filters">
       <h2 class="heading-medium">Filter your results</h2>
-      <h3 class="heading-small">Geographical area</h3>
-      <p>Search for an area</p>
-      <input class="form-control" id="full-name-f1" type="text">
-      <h3 class="heading-small">Year</h3>
-      <p>Search for a year</p>
-      <input class="form-control" id="full-name-f1" type="text">
-      <h3 class="heading-small">Publishing organisation</h3>
-      <p>Search for an organisation</p>
-      <input class="form-control" id="full-name-f1" type="text">
-      <h3 class="heading-small">Format</h3>
-      <p>Select a format</p>
+      <label class="form-label">
+        Geographical area
+        <span class="form-hint">
+          Example Wales
+        </span>
+      </label>
+      <input class="form-control" id="filter-area" type="text">
+      <label class="form-label">
+        Year
+        <span class="form-hint">
+          Example 2015
+        </span>
+      </label>
+      <input class="form-control" id="filter-year" type="text">
+      <label class="form-label">
+        Publishing Organisation
+        <span class="form-hint">
+          Example Land Registry
+        </span>
+      </label>
+      <input class="form-control" id="filter-organisation" type="text">
+      <label class="form-label">
+        Format
+      </label>
       <form>
         <fieldset>
 
@@ -139,6 +71,43 @@
       </form>
       <input class="button" type="submit" value="Filter results">
     </div>
+
+    <div class="column-two-thirds filters">
+      {% for bb in data.broadband %}
+      <div class="result">
+        <h2 class="heading-medium"><a href="/datasets/broadband">{{ bb.title }} </a></h2>
+        <dl class="metadata">
+              <dt>Published by:</dt>
+              <dd><a href="">{{ bb.publisher }}</a></dd>
+              <dt>Last updated:</dt>
+              <dd><a href="">05 April 2017</a></dd>
+              <dt>Geographical area:</dt>
+              <dd>{{ bb.location }}</dd>
+            </dl>
+        <p>{{ bb.description | truncate(140)  }}</p>
+      </div>
+      {% endfor %}
+
+      <ul class="pagination">
+        <br />
+        <li>1</li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+      </ul>
+
+      <div class="related-searches">
+        <h2 class="heading-medium">Searches related to "broadband"</h2>
+        <ul>
+          <li><a href="">internet speed</a></li>
+          <li><a href="">uk home broadband</a></li>
+          <li><a href="">internet at home</a></li>
+          <li><a href="">fibre optic internet</a></li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 
 </main>
