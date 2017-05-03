@@ -44,7 +44,6 @@ router.get('/search-results', function(req, res, next) {
     results.hits.hits
       .map(result => {
         var newResult = result._source
-        delete newResult.resources
         const day = newResult.last_edit_date.substr(8,2)
         const month = monthNames[newResult.last_edit_date.substr(5,2)]
         const year = newResult.last_edit_date.substr(0,4)
