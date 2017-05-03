@@ -8,15 +8,18 @@
 
 <main class="results-page" id="content" role="main">
   <div class="grid-row masthead">
-    <div class="column-two-thirds">
-      <h1 class="heading-large">Search data.gov.uk</h1>
-      <label class="form-label" for="full-name-f1">Search by name, publisher or year</label>
-      <input class="search form-control" id="full-name-f1" type="text"><button type="submit" class="search-submit">Find data</button>
-    </div>
+    <h1 class="heading-large">Search data.gov.uk</h1>
+    <form id="search-form" action="/search-results" method="GET" class="column-two-thirds">
+      <fieldset>
+        <div id="search-box">
+          <input id="q" name="q" type="text" placeholder="" class="form-control search" autocomplete="off"/><button type="submit" class="search-submit">Find data</button>
+        </div>
+      </fieldset>
+    </form>
   </div>
   <div class="grid-row">
     <div class="column-two-thirds">
-      <span class="bold-small">356</span> results for <span class="bold-small">broadband</span>
+      <span class="bold-small">356</span> results for <span class="bold-small">{{ query }}</span>
     </div>
   </div>
   <div class="grid-row">
@@ -80,18 +83,22 @@
     </div>
 
     <div class="column-two-thirds filters">
-      {% for bb in data.broadband %}
-      <div class="result{% if bb.dataset_type == 'register' %} register{% endif %} ">
-        <h2 class="heading-medium"><a href="/datasets/broadband">{{ bb.title }} </a></h2>
+      {% for dataset in results %}
+      <div class="result result{% if dataset.dataset_type == 'register' %} register{% endif %} ">
+        <h2 class="heading-medium">
+          <a href="/datasets/broadband">{{ dataset.title | truncate(65) }}</a>
+        </h2>
         <dl class="metadata">
               <dt>Published by:</dt>
-              <dd><a href="">{{ bb.publisher }}</a></dd>
+              <dd><a href="#">{{ dataset.organisation.title }}</a></dd>
               <dt>Last updated:</dt>
-              <dd>05 April 2017</dd>
-              <dt>Geographical area:</dt>
-              <dd>{{ bb.location }}</dd>
+              <dd>{{ dataset.last_updated }}</dd>
+              {% if dataset.location %}
+                <dt>Geographical area:</dt>
+                <dd>{{ dataset.location }}</dd>
+              {% endif %}
             </dl>
-        <p>{{ bb.description | truncate(140)  }}</p>
+        <p>{{ dataset.summary | truncate(140)  }}</p>
       </div>
       {% endfor %}
 
