@@ -185,7 +185,7 @@ main.results-page#content .grid-row.masthead {
 
 .result {
   border-bottom: 1px solid #BFC1C3;
-  padding-bottom: 25px;
+  padding: 25px;
   h2 {
     margin-bottom: 10px;
   }
@@ -200,6 +200,12 @@ main.results-page#content .grid-row.masthead {
     }
   }
 }
+
+.register {
+  background-color: #eee;
+  border-left: solid 8px #aaa;
+}
+
 
 .filters {
   margin-top: 2em;
