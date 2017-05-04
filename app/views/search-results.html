@@ -8,14 +8,18 @@
 
 <main class="results-page" id="content" role="main">
   <div class="grid-row masthead">
-    <h1 class="heading-large">Search data.gov.uk</h1>
-    <form id="search-form" action="/search-results" method="GET" class="column-two-thirds">
-      <fieldset>
-        <div id="search-box">
-          <input id="q" name="q" type="text" placeholder="" class="form-control search" autocomplete="off" value="{{query}}"/><button type="submit" class="search-submit">Find data</button>
-        </div>
-      </fieldset>
-    </form>
+    <div class="column-two-thirds">
+      <h1 class="heading-large">Search data.gov.uk</h1>
+      <form id="search-form" action="/search-results" method="GET" class="column-two-thirds">
+        <fieldset>
+          <div id="search-box">
+            <input id="q" name="q" type="text" placeholder="" class="form-control search" autocomplete="off" value="{{query}}"/><button type="submit" class="search-submit">Find data</button>
+          </div>
+          <p>Did you mean <a href="?q=list+of+countries">list of countries</a>?</p>
+        </fieldset>
+      </form>
+    </div>
+
   </div>
   <div class="grid-row">
     <div class="column-two-thirds">
@@ -24,7 +28,7 @@
   </div>
   <div class="grid-row">
     <div class="column-one-third filters">
-      <h2 class="heading-medium">Filter your results</h2>
+      <h2 class="heading-medium">Filter search  results</h2>
 
       <label class="form-label">
         Sort results by
@@ -82,12 +86,12 @@
       <input class="button" type="submit" value="Filter results">
     </div>
 
-    <div class="column-two-thirds filters">
+    <div class="column-two-thirds">
       {% set regExp = r/.*register.*/gi %}
 
       {% for dataset in results %}
       <!-- When source data is fixed, reset to if dataset.dataset_type == 'register' -->
-      <div class="result result{% if regExp.test(dataset.title) %} register{% endif %} ">
+      <div class="result {% if regExp.test(dataset.title) %}register{% else %}not-register{% endif %} ">
         <h2 class="heading-medium">
           <a href="/datasets/broadband">{{ dataset.title | truncate(65) }}</a>
         </h2>
