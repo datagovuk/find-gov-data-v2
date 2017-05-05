@@ -19,26 +19,22 @@
   </div>
   <div class="grid-row">
     <div class="column-two-thirds">
-      <span class="bold-small">356</span> results for <span class="bold-small">{{ query }}</span>
+      <span class="bold-small">356</span> results found for <span class="bold-small">'{{ query }}'</span>
     </div>
   </div>
   <div class="grid-row">
     <div class="column-one-third filters">
-      <h2 class="heading-medium">Filter your results</h2>
+      <h2 class="heading-medium">Filter search results</h2>
 
       <label class="form-label">
-        Sort results by
+
       </label>
       <form>
         <div class="form-group">
           <fieldset>
 
-            <legend class="visually-hidden">Sort results by</legend>
+            <legend class="visually-hidden">Choose from</legend>
 
-            <div class="multiple-choice">
-              <input id="radio-inline-2" type="radio" name="radio-inline-group" value="Most recent" checked='checked'>
-              <label for="radio-inline-2">Last updated</label>
-            </div>
             <div class="multiple-choice">
               <input id="radio-inline-1" type="radio" name="radio-inline-group" value="Best match">
               <label for="radio-inline-1">Best match</label>
@@ -47,20 +43,16 @@
               <input id="radio-inline-2" type="radio" name="radio-inline-group" value="Most viewed">
               <label for="radio-inline-2">Most viewed</label>
             </div>
+            <div class="multiple-choice">
+              <input id="radio-inline-2" type="radio" name="radio-inline-group" value="Most recent" checked='checked'>
+              <label for="radio-inline-2">Most recent</label>
+            </div>
           </fieldset>
         </div>
       </form>
 
       <label class="form-label">
-        Geographical area
-      </label>
-      <input class="form-control" id="filter-area" type="text">
-      <label class="form-label">
-        Publishing Organisation
-      </label>
-      <input class="form-control" id="filter-organisation" type="text">
-      <label class="form-label">
-        Publisher type
+        Select publisher
       </label>
       <form>
         <fieldset>
@@ -79,7 +71,15 @@
           </div>
         </fieldset>
       </form>
-      <input class="button" type="submit" value="Filter results">
+
+      <br/>
+      <label class="form-label">
+        Enter geographical area
+      </label>
+
+      <input class="form-control" id="filter-area" type="text">
+
+      <input class="button" type="submit" value="Search">
     </div>
 
     <div class="column-two-thirds filters">
