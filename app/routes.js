@@ -79,7 +79,6 @@ router.get('/search-results', function(req, res, next) {
 })
 
 router.get('/datasets/:name', function(req, res, next){
-  console.log(req.params.name);
   const esQuery = {
     index: process.env.ES_INDEX,
     body: {
@@ -88,13 +87,10 @@ router.get('/datasets/:name', function(req, res, next){
   }
 
   esClient.search(esQuery, (esError, esResponse) => {
-    // console.log(processEsResponse(esResponse)[0])
     if (esError) {
       throw esError
     } else {
-      res.render('dataset', {
-        result: processEsResponse(esResponse)[0]
-      })
+      res.render('dataset', { result: processEsResponse(esResponse)[0] })
     }
   })
 })

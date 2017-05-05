@@ -77,6 +77,9 @@ $path: "/public/images/";
 }
 
 section .year-expand {
+  .showHide-control, .expand {
+    cursor: pointer;
+  }
   overflow: hidden;
   border-bottom: 1px solid #BFC1C3;
   &:hover {
@@ -252,7 +255,7 @@ main.results-page#content .grid-row.masthead {
 
 /* Make secondary heading work even with a heading-medium  */
 .heading-medium {
-  margin-top: 12px;
+  margin-top: 30px;
   .heading-secondary {
     display: block;
     color: #555;

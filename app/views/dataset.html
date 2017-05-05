@@ -17,13 +17,6 @@
         <dl class="metadata">
           <dt>Published by:</dt>
           <dd><a href="">Land Registry</a></dd>
-<!--      To display once you click on learn more
-          <dt>Last updated</dt>
-          <dd>05 April 2017</dd>
-          <dt>Update frequency</dt>
-          <dd>Every quarter</dd>
-          <dt>License</dt>
-          <dd>Open Government License</dd> -->
           <dt>Last updated:</dt>
           <dd>{{ result.last_updated }}</dd>
 
@@ -36,139 +29,26 @@
         <p> {{ result.notes | truncate(200)}} </p>
       </div>
       <section class="data-links">
-        <h2 class="heading-medium">
-          Data links<span class="showHide-open-all">Open all</span>
+        <h2 class="heading-medium">Data
+          <span class="showHide-open-all">Open all</span>
         </h2>
         <div class="breaker"></div>
         <ul>
           <li class="showHide">
             <div class="year-expand">
-              <h3 class="heading-small">2017</h3>
-              <div><span class="expand showHide-control">+</span></div>
+              <h3 class="heading-small showHide-control">All data links</h3>
+              <div><span class="expand">+</span></div>
             </div>
             <div class="year-datasets showHide-content" style="display: none">
               <table>
-                <thead>
-                  <tr>
-                    <th class="title">Link to the data</th>
-                    <th>Format</th>
-                    <th>Date added</th>
-                  </tr>
-                </thead>
                 <tbody>
-                  <tr>
-                    <td class="title"><a href="">March 2017</a></td>
-                    <td>CSV</td>
-                    <td>02 April 2017</td>
-                  </tr>
-                  <tr>
-                    <td class="title"><a href="">February 2017</a></td>
-                    <td>CSV</td>
-                    <td>02 March 2017</td>
-                  </tr>
-                  <tr>
-                    <td class="title"><a href="">January 2017</a></td>
-                    <td>CSV</td>
-                    <td>02 February 2017</td>
-                  </tr>
-                  <tr>
-                    <td class="title"><a href="">December 2016</a></td>
-                    <td>CSV</td>
-                    <td>02 January 2017</td>
-                  </tr>
-                  <tr>
-                    <td class="title"><a href="">November 2017</a></td>
-                    <td>CSV</td>
-                    <td>02 December 2016</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </li>
-          <li class="showHide">
-            <div class="year-expand">
-              <h3 class="heading-small">2016</h3>
-              <div><span class="expand showHide-control">+</span></div>
-            </div>
-            <div class="year-datasets showHide-content" style="display: none">
-              <table>
-                <thead>
-                  <tr>
-                    <th class="title">Link to the data</th>
-                    <th>Format</th>
-                    <th>Date added</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="title"><a href="">March 2016</a></td>
-                    <td>CSV</td>
-                    <td>02 April 2016</td>
-                  </tr>
-                  <tr>
-                    <td class="title"><a href="">February 2016</a></td>
-                    <td>CSV</td>
-                    <td>02 March 2016</td>
-                  </tr>
-                  <tr>
-                    <td class="title"><a href="">January 2016</a></td>
-                    <td>CSV</td>
-                    <td>02 February 2016</td>
-                  </tr>
-                  <tr>
-                    <td class="title"><a href="">December 2015</a></td>
-                    <td>CSV</td>
-                    <td>02 January 2016</td>
-                  </tr>
-                  <tr>
-                    <td class="title"><a href="">November 2015</a></td>
-                    <td>CSV</td>
-                    <td>02 December 2015</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </li>
-          <li class="showHide">
-            <div class="year-expand">
-              <h3 class="heading-small">2015</h3>
-              <div><span class="expand showHide-control">+</span></div>
-            </div>
-            <div class="year-datasets showHide-content" style="display: none">
-              <table>
-                <thead>
-                  <tr>
-                    <th class="title">Link to the data</th>
-                    <th>Format</th>
-                    <th>Date added</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="title"><a href="">March 2015</a></td>
-                    <td>CSV</td>
-                    <td>02 April 2015</td>
-                  </tr>
-                  <tr>
-                    <td class="title"><a href="">February 2015</a></td>
-                    <td>CSV</td>
-                    <td>02 March 2015</td>
-                  </tr>
-                  <tr>
-                    <td class="title"><a href="">January 2015</a></td>
-                    <td>CSV</td>
-                    <td>02 February 2015</td>
-                  </tr>
-                  <tr>
-                    <td class="title"><a href="">December 2014</a></td>
-                    <td>CSV</td>
-                    <td>02 January 2015</td>
-                  </tr>
-                  <tr>
-                    <td class="title"><a href="">November 2014</a></td>
-                    <td>CSV</td>
-                    <td>02 December 2014</td>
-                  </tr>
+                  {% for datafile in result.resources %}
+                    <tr>
+                      <td class="title">{{ datafile.name }}</td>
+                      <td><a href="">Preview</a></td>
+                      <td><a href="{{ datafile.url }}">Download {{ datafile.format }}</a></td>
+                    </tr>
+                  {% endfor %}
                 </tbody>
               </table>
             </div>
@@ -176,32 +56,52 @@
         </ul>
         <input class="button" type="submit" value="Download all">
       </section>
-      <h2 class="heading-medium">
-        Additional information
-      </h2>
-      <p>We try to make sure that our public data is accurate, but cannot guarantee that it is free from errors or fit for your purpose or use. Reports are based on data collected at the time a property transaction is registered with us and will not necessarily be up to date with the most recent information. For more information, read <a href="">https://www.gov.uk/government/statistical-data-sets/price-paid-data-downloads#when-using-or-publishing-our-price-paid-data</a></p>
-      <h2 class="heading-medium">Supporting documentation</h2>
-      <table>
-        <thead>
-          <tr>
-            <th class="title">Document link</th>
-            <th>Format</th>
-            <th>Date added</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="title"><a href="">Table legends and figures</a></td>
-            <td>PDF</td>
-            <td>02 February 2017</td>
-          </tr>
-          <tr>
-            <td class="title"><a href="">Annual report 2015</a></td>
-            <td>PDF</td>
-            <td>10 April 2016</td>
-          </tr>
-        </tbody>
-      </table>
+
+      <section>
+        <h2 class="heading-medium">
+          Additional information
+        </h2>
+        <p>{{ dataset.description }}</p>
+      </section>
+
+      <section>
+        <h2 class="heading-medium">
+          Supporting documentation
+          <span class="showHide-open-all">Open all</span>
+        </h2>
+        <div class="breaker"></div>
+        <ul>
+          <li class="showHide">
+            <div class="year-expand">
+              <h3 class="heading-small showHide-control">All documents</h3>
+              <div><span class="expand">+</span></div>
+            </div>
+            <div class="year-datasets showHide-content" style="display: none">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="title">Document link</th>
+                    <th>Format</th>
+                    <th>Date added</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for datafile in result.documentation %}
+                    <tr>
+                      <td class="title">
+                        <a href="{{ datafile.url }}">{{ datafile.name }}</a>
+                      </td>
+                      <td>{{ datafile.format or "n/a" }}</td>
+                      <td>{{ datafile.start_date or "n/a" }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </li>
+        </ul>
+      </section>
+
       <section id="feedback">
         <div>
           <h3 class="heading-small">
@@ -262,13 +162,14 @@
               </fieldset>
             </div>
           </form>
+        </div>
       </section>
     </div>
     <div class="column-one-third">
       <ul>
         <h3 class="heading-medium related">Related datasets</h3>
         {% for dataset in results %}
-        <li><a href="/datasets/{{ dataset.name }}">{{ dataset.title | truncate(65) }}</a></li>
+          <li><a href="/datasets/{{ dataset.name }}">{{ dataset.title | truncate(65) }}</a></li>
         {% endfor %}
       </ul>
     </div>
