@@ -36,6 +36,14 @@ const processEsResponse = results =>
         .filter(loc => loc)
         .join(',')
       newResult.last_updated = day + ' ' + month + ' ' + year
+      if (newResult.update_frequency == 'yearly') {
+        var int = Number(interval)
+        year_int += 1
+        newResult.expected_update = day + ' ' + month + ' ' + year_int
+      }
+      else if (newResult.update_frequency == '') {
+        newResult.expected_update = 'Not known'
+      }
        return newResult
     })
 

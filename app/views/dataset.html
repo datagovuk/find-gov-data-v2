@@ -14,15 +14,9 @@
         {{ result.title }}
       </h1>
       <div class="box">
-        <h3 class="heading-small">
-            Summary
-        </h3>
-        <p>Price Paid Data tracks the residential property sales in England and Wales that are lodged with HM Land Registry for registration. <br><a href="" class="toggle">View full summary</a></p>
         <dl class="metadata">
-          <dt>Published by</dt>
+          <dt>Published by:</dt>
           <dd><a href="">Land Registry</a></dd>
-          <dt>Geographical area</dt>
-          <dd>Surrey (Local Authority)</dd>
 <!--      To display once you click on learn more
           <dt>Last updated</dt>
           <dd>05 April 2017</dd>
@@ -30,8 +24,16 @@
           <dd>Every quarter</dd>
           <dt>License</dt>
           <dd>Open Government License</dd> -->
+          <dt>Last updated:</dt>
+          <dd>{{ result.last_updated }}</dd>
+
+          <dt>Expected update:</dt>
+          <dd>{{ result.expected_update }}</dd>
         </dl>
-        <p><a href="" class="toggle">Learn more about this dataset</a></p>
+        <h3 class="heading-small">
+            Summary
+        </h3>
+        <p> {{ result.notes | truncate(200)}} </p>
       </div>
       <section class="data-links">
         <h2 class="heading-medium">
@@ -262,17 +264,12 @@
           </form>
       </section>
     </div>
-    <div class="column-one-third related">
-      <h3 class="heading-small">Search on data.gov.uk</h3>
-      <input class="form-control" id="full-name-f1" type="text">
-      <h3 class="heading-small">Related datasets</h3>
+    <div class="column-one-third">
       <ul>
-        <li><a href="">Housing prices in London</a></li>
-        <li><a href="">Tenants in England and Wales</a></li>
-        <li><a href="">Mortgage approval rates in the UK</a></li>
-        <li><a href="">Cost of living 2016</a></li>
-        <li><a href="">Shared ownership sales in Wales</a></li>
-        <li><a href="">Mortgage interest rates in Scotland</a></li>
+        <h3 class="heading-medium related">Related datasets</h3>
+        {% for dataset in results %}
+        <li><a href="/datasets/{{ dataset.name }}">{{ dataset.title | truncate(65) }}</a></li>
+        {% endfor %}
       </ul>
     </div>
   </div>
