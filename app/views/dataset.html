@@ -1,0 +1,179 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+  GOV.UK prototype kit
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <h1 class="heading-large">
+        {{ result.title }}
+      </h1>
+      <div class="box">
+        <dl class="metadata">
+          <dt>Published by:</dt>
+          <dd><a href="">Land Registry</a></dd>
+          <dt>Last updated:</dt>
+          <dd>{{ result.last_updated }}</dd>
+
+          <dt>Expected update:</dt>
+          <dd>{{ result.expected_update }}</dd>
+        </dl>
+        <h3 class="heading-small">
+            Summary
+        </h3>
+        <p> {{ result.notes | truncate(200)}} </p>
+      </div>
+      <section class="data-links">
+        <h2 class="heading-medium">Data
+          <span class="showHide-open-all">Open all</span>
+        </h2>
+        <div class="breaker"></div>
+        <ul>
+          <li class="showHide">
+            <div class="year-expand">
+              <h3 class="heading-small showHide-control">All data links</h3>
+              <div><span class="expand">+</span></div>
+            </div>
+            <div class="year-datasets showHide-content" style="display: none">
+              <table>
+                <tbody>
+                  {% for datafile in result.resources %}
+                    <tr>
+                      <td class="title">{{ datafile.name }}</td>
+                      <td><a href="">Preview</a></td>
+                      <td><a href="{{ datafile.url }}">Download {{ datafile.format }}</a></td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </li>
+        </ul>
+        <input class="button" type="submit" value="Download all">
+      </section>
+
+      <section>
+        <h2 class="heading-medium">
+          Additional information
+        </h2>
+        <p>{{ dataset.description }}</p>
+      </section>
+
+      <section>
+        <h2 class="heading-medium">
+          Supporting documentation
+          <span class="showHide-open-all">Open all</span>
+        </h2>
+        <div class="breaker"></div>
+        <ul>
+          <li class="showHide">
+            <div class="year-expand">
+              <h3 class="heading-small showHide-control">All documents</h3>
+              <div><span class="expand">+</span></div>
+            </div>
+            <div class="year-datasets showHide-content" style="display: none">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="title">Document link</th>
+                    <th>Format</th>
+                    <th>Date added</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for datafile in result.documentation %}
+                    <tr>
+                      <td class="title">
+                        <a href="{{ datafile.url }}">{{ datafile.name }}</a>
+                      </td>
+                      <td>{{ datafile.format or "n/a" }}</td>
+                      <td>{{ datafile.start_date or "n/a" }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section id="feedback">
+        <div>
+          <h3 class="heading-small">
+            Was this page useful for you?
+          </h3>
+          <form>
+            <div class="form-group feedback-form">
+              <fieldset class="inline">
+
+                <legend class="visually-hidden">Was this page useful for you?</legend>
+
+                <div class="multiple-choice" data-target="helpful">
+                  <input id="radio-inline-1" type="radio" name="radio-inline-group" value="Yes">
+                  <label for="radio-inline-1">Yes</label>
+                </div>
+
+                <div class="multiple-choice" data-target="not-helpful">
+                  <input id="radio-inline-2" type="radio" name="radio-inline-group" value="No">
+                  <label for="radio-inline-2">No</label>
+                </div>
+
+                <div class="panel panel-border-narrow js-hidden" id="not-helpful">
+                  <div class="multiple-choice">
+                    <input id="" name="" type="checkbox" value="true">
+                    <label for="">I couldn't find what I was looking for</label>
+                  </div>
+                  <div class="multiple-choice">
+                    <input id="" name="" type="checkbox" value="true">
+                    <label for="">The data was incomplete</label>
+                  </div>
+                  <div class="multiple-choice">
+                    <input id="" name="" type="checkbox" value="true">
+                    <label for="">The data is too old</label>
+                  </div>
+                  <div class="multiple-choice">
+                    <input id="" name="" type="checkbox" value="true">
+                    <label for="">The data was in a format I couldn't use</label>
+                  </div>
+                  <div class="multiple-choice">
+                    <input id="" name="" type="checkbox" value="true">
+                    <label for="">The data links don't work</label>
+                  </div>
+                  <div class="multiple-choice">
+                    <input id="" name="" type="checkbox" value="true">
+                    <label for="">The data contained errors</label>
+                  </div>
+                  <div class="multiple-choice">
+                    <input id="checkbox-telephone-number" name="contact-by-text-phone" type="checkbox" value="true">
+                    <label for="checkbox-telephone-number">Other</label>
+                  </div>
+                  <input class="button" type="submit" value="Submit">
+                </div>
+
+                <div class="js-hidden" id="helpful">
+                  <input class="button" type="submit" value="Submit">
+                </div>
+
+              </fieldset>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+    <div class="column-one-third">
+      <ul>
+        <h3 class="heading-medium related">Related datasets</h3>
+        {% for dataset in results %}
+          <li><a href="/datasets/{{ dataset.name }}">{{ dataset.title | truncate(65) }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

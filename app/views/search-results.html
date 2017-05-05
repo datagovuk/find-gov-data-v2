@@ -89,7 +89,7 @@
       <!-- When source data is fixed, reset to if dataset.dataset_type == 'register' -->
       <div class="result result{% if regExp.test(dataset.title) %} register{% endif %} ">
         <h2 class="heading-medium">
-          <a href="/datasets/broadband">{{ dataset.title | truncate(65) }}</a>
+          <a href="/datasets/{{ dataset.name }}">{{ dataset.title | truncate(65) }}</a>
         </h2>
         <dl class="metadata">
               <dt>Published by:</dt>
