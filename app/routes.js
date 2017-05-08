@@ -83,6 +83,9 @@ router.get('/search-results', function(req, res, next) {
       throw esError
     } else {
       res.render('search-results', {
+        central: orgTypes.indexOf('central-gov') !== -1,
+        local: orgTypes.indexOf('local-auth') !== -1,
+        bodies: orgTypes.indexOf('bodies') !== -1,
         query: query,
         orgTypes: orgTypes,
         sortBy: ['best', 'recent', 'viewed'].indexOf(sortBy) !== -1 ? sortBy : '',
