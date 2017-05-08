@@ -87,10 +87,37 @@ router.get('/datasets/:name', function(req, res, next){
   }
 
   esClient.search(esQuery, (esError, esResponse) => {
+    // console.log(processEsResponse(esResponse)[0])
+    var result = processEsResponse(esResponse)[0]
+
+    const groupByDate = function(result){
+      var groups = []
+
+      if (result.resources) {
+        result.resources.forEach(function(datafile){
+          if (datafile['start_date']) {
+            const yearArray = groups.filter(yearObj => yearObj.year == datafile['start_date'].substr(0,4))
+            if (yearArray.length === 0) {
+              var group = {'year': "", 'datafiles':[]}
+              group['year']= datafile['start_date'].substr(0,4)
+              group['datafiles'].push(datafile)
+              groups.push(group)
+            } else {
+              yearArray[0]['datafiles'].push(datafile)
+            }
+          }
+        })
+      }
+      return groups
+    }
+
     if (esError) {
       throw esError
     } else {
-      res.render('dataset', { result: processEsResponse(esResponse)[0] })
+      res.render('dataset', {
+        result: result,
+        groups: groupByDate(result)
+      })
     }
   })
 })
