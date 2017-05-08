@@ -520,3 +520,17 @@ main.results-page#content .grid-row.masthead .search-section {
 main.results-page#content .grid-row.masthead {
   margin-bottom: 50px;
 }
+
+.result {
+  padding-left: 0;
+  padding-top: 0;
+  margin-left: 25px;
+  margin-bottom: 25px;
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.pagination, .related-searches {
+  margin-left: 25px;
+}
