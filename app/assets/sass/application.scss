@@ -480,3 +480,43 @@ a:focus {
     margin-bottom: 0.5em;
   }
 }
+
+// design and content changes
+
+.filters input.button {
+  margin-top: 20px;
+}
+
+.filters input.button.secondary {
+  background: none;
+  color: $govuk-blue;
+  text-decoration: underline;
+  margin-top: 20px;
+  box-shadow: none;
+}
+
+.form-label {
+  margin-bottom: 5px;
+}
+
+main.results-page#content {
+  max-width: 100%;
+}
+
+main.results-page#content .grid-row.masthead {
+  padding: 50px 1.5em;
+}
+
+main.results-page#content .grid-row.masthead .search-section {
+  max-width: 960px;
+  margin: auto;
+  h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-left: 15px;
+  }
+}
+
+main.results-page#content .grid-row.masthead {
+  margin-bottom: 50px;
+}
