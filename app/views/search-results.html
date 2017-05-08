@@ -21,67 +21,63 @@
   </div>
   <div class="grid-row">
     <div class="column-two-thirds">
-      <span class="bold-small">356</span> results found for <span class="bold-small">'{{ query }}'</span>
+      <span class="bold-small">{{ results.length }}</span> results found for <span class="bold-small">'{{ query }}'</span>
     </div>
   </div>
   <div class="grid-row">
     <div class="column-one-third filters">
-      <label class="form-label">
-      <h2 class="heading-medium">Sort by</h2>
-      </label>
       <form>
         <div class="form-group">
           <fieldset>
-
+            <input name="q" type="hidden" class="form-control search" value="{{query}}"/>
+            <h2 class="heading-medium first-filter">Sort by</h2>
             <legend class="visually-hidden">Sort by</legend>
-
             <div class="multiple-choice">
-              <input id="radio-inline-1" type="radio" name="radio-inline-group" value="Best match">
-              <label for="radio-inline-1">Best match</label>
+              <input id="sortby-best" type="radio" name="sortby" value="best" {{ "checked" if sortBy == "best" else "" }}>
+              <label for="sortby-best">Best match</label>
             </div>
             <div class="multiple-choice">
-              <input id="radio-inline-2" type="radio" name="radio-inline-group" value="Most viewed">
-              <label for="radio-inline-2">Most viewed</label>
+              <input id="sortby-recent" type="radio" name="sortby" value="recent" {{ "checked" if sortBy == "recent" else "" }}>
+              <label for="sortby-recent">Most recent</label>
             </div>
             <div class="multiple-choice">
-              <input id="radio-inline-2" type="radio" name="radio-inline-group" value="Most recent" checked='checked'>
-              <label for="radio-inline-2">Most recent</label>
+              <input id="sortby-best" type="radio" name="sortby" value="viewed" {{ "checked" if sortBy == "viewed" else "" }}>
+              <label for="sortby-best">Most viewed</label>
             </div>
           </fieldset>
         </div>
+
+        <h2 class="heading-medium">Filter search results</h2>
+        <div class="form-group">
+          <label class="form-label">Select publisher</label>
+
+          <fieldset>
+            <legend class="visually-hidden">Select publisher</legend>
+            <div class="multiple-choice">
+              <input id="a" name="org-type" type="checkbox" value="central-gov" {{ "checked" if central else "" }}>
+              <label for="a">Central Government</label>
+            </div>
+            <div class="multiple-choice">
+              <input id="b" name="org-type" type="checkbox" value="local-auth" {{ "checked" if local else "" }}>
+              <label for="b">Local Authorities</label>
+            </div>
+            <div class="multiple-choice">
+              <input id="c" name="org-type" type="checkbox" value="other" {{ "checked" if bodies else "" }}>
+              <label for="c">Other Government bodies</label>
+            </div>
+          </fieldset>
+        </div>
+
+        <label for="location" class="form-label">
+          Enter geographical area
+        </label>
+        <input class="form-control" id="location" name="location" type="text" value="{{location}}">
+
+
+        <input class="button" type="submit" value="Filter">
+        <input class="button secondary" type="submit" value="Reset all filters">
       </form>
-      <h2 class="heading-medium">Filter search results</h2>
 
-      <label class="form-label">
-        Select publisher
-      </label>
-      <form>
-        <fieldset>
-          <legend class="visually-hidden">Format</legend>
-          <div class="multiple-choice">
-            <input id="" name="org-types" type="checkbox" value="">
-            <label for="">Central Government</label>
-          </div>
-          <div class="multiple-choice">
-            <input id="" name="org-types" type="checkbox" value="">
-            <label for="">Local Authorities</label>
-          </div>
-          <div class="multiple-choice">
-            <input id="" name="org-type" type="checkbox" value="">
-            <label for="">Other Government bodies</label>
-          </div>
-        </fieldset>
-      </form>
-
-      <br/>
-      <label class="form-label">
-        Enter geographical area
-      </label>
-
-      <input class="form-control" id="filter-area" type="text">
-
-      <input class="button" type="submit" value="Filter">
-      <input class="button secondary" type="submit" value="Reset all filters">
     </div>
 
     <div class="column-two-thirds filters">

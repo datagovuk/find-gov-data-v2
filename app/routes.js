@@ -5,7 +5,7 @@ var elasticsearch = require('elasticsearch')
 
 const esClient = new elasticsearch.Client({
   host: process.env.ES_HOSTS,
- // log: 'trace'
+//  log: 'trace'
 })
 
 // Deliver all the data to every template
@@ -48,35 +48,51 @@ const processEsResponse = results =>
     })
 
 
-
-
-
 router.get('/search-results', function(req, res, next) {
   const query = req.query.q
+  const orgTypes = req.query['org-type']
+  const sortBy = req.query['sortby']
+  const location = req.query['location']
+
+  const shoulds = []
+  if (query) shoulds.push(
+    { match: { title: query } },
+    { match: { summary: query } },
+    { match: { description: query } }
+  )
+
+  if (location) shoulds.push(
+    { match: { location1: location } },
+    { match: { location2: location } },
+    { match: { location3: location } }
+  )
+
   const esQuery = {
     index: process.env.ES_INDEX,
     body: {
       query: {
-        query_string : {
-          query: query,
-          fields: ["summary^2", "title^3", "description^1", "_all"],
-          default_operator: "and"
+        bool: {
+          should: shoulds
         }
-      },
+      }
     }
   }
 
   esClient.search(esQuery, (esError, esResponse) => {
-      if (esError) {
-        throw esError
-      } else {
-        res.render('search-results', {
-          query: req.query.q,
-          results: processEsResponse(esResponse)
-        })
-      }
-    })
+    if (esError) {
+      throw esError
+    } else {
+      res.render('search-results', {
+        query: query,
+        orgTypes: orgTypes,
+        sortBy: ['best', 'recent', 'viewed'].indexOf(sortBy) !== -1 ? sortBy : '',
+        location: location,
+        results: processEsResponse(esResponse)
+      })
+    }
+  })
 })
+
 
 router.get('/datasets/:name', function(req, res, next){
   const esQuery = {
