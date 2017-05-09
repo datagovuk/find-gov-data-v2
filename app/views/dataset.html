@@ -40,6 +40,7 @@
         <p> {{ result.notes | truncate(200)}} </p>
       </div>
       <section class="data-links">
+<!-- accoridions for time series datasets -->
         {% if groups|length %}
           <h2 class="heading-medium">Data links
             <span class="showHide-open-all">Open all</span>
@@ -57,7 +58,7 @@
                   <tr>
                     <th class="title">Link to the data</th>
                     <th>Format</th>
-                    <th>Date added</th>
+                    <th>Last updated</th>
                   </tr>
                   <tbody>
                     {% for datafile in yearGroup.datafiles %}
@@ -67,10 +68,14 @@
                           {% else %} Data Link
                           {% endif %}
                         </td>
-                        <td>{{ datafile.format }} (344 KB)</td>
-                        {% if datafile.date_added %}
+                        {% if datafile.format %}
+                        <td>{{ datafile.format }} (347kb)</td>
+                        {% else %}
+                        <td>N/A</td>
+                        {% endif %}
+                        {% if datafile.last_updated %}
                           <td>
-                             {{ datafile.date_added }}
+                             {{ datafile.last_updated }}
                           </td>
                         {% else %}
                           <td class="no-date-added">
@@ -86,24 +91,26 @@
             </li>
           </ul>
           <input class="button" type="submit" value="Download all">
+<!-- no accordions for other datasets -->
         {% else %}
           <h2 class="heading-medium">Data</h2>
           <table>
             <tr>
               <th class="title">Link to the data</th>
               <th>Format</th>
-              <th>Date added</th>
-              <th>File size</th>
+              <th>Last updated</th>
             </tr>
             <tbody>
               {% for datafile in result.resources %}
                 <tr>
                   <td class="title"><a href="{{ datafile.url }}">
-                    {% if datafile.name %} {{ datafile.name }}
-                    {% else %} Data Link
-                    {% endif %}
+                    {{ datafile.name or "Data Link"}}
                   </td>
-                  <td>{{ datafile.format }}</td>
+                  {% if datafile.format %}
+                  <td>{{ datafile.format }} (347kb)</td>
+                  {% else %}
+                  <td>N/A</td>
+                  {% endif %}
                   {% if datafile.date_added %}
                     <td>
                        {{ datafile.date_added }}
@@ -112,9 +119,6 @@
                     <td class="no-date-added">
                       Not available
                   {% endif %}
-                    </td>
-                    <td>
-                      347kb
                     </td>
                 </tr>
               {% endfor %}
@@ -127,7 +131,11 @@
         <h2 class="heading-medium">
           Additional information
         </h2>
-        <p>{{ dataset.description }}</p>
+        <p> This dataset is available under the <a href="">Open Government Licence</a>. All the data variables are coded rather than
+        containing textual strings. The look up tables are available under "Additional resources" section towards the border-bottom
+        of the table for the 2015 data.
+
+        Coverage is for England Scotland and Wales and was added on the 20/09/2011. </p>
       </section>
 
       <section>
@@ -167,6 +175,28 @@
           </li>
         </ul>
       </section>
+
+      {% if result.organisation.contact_name or result.organisation.contact_email %}
+        <section class = "contact">
+          <h2 class="heading-medium">
+            Contact
+          </h2>
+          <div class="column-one-half">
+            <h3 class="heading-small">
+              Enquiries
+            </h3>
+            <p>{{ result.organisation.contact_name }} </br> <a href="">{{ result.organisation.contact_email }}</a> </p>
+          </div>
+          {% if result.organisation.foi_name or result.organisation.foi_email %}
+            <div class="column-one-half">
+              <h3 class="heading-small">
+                Freedom of Information (FOI) requests
+              </h3>
+              <p>{{ result.organisation.foi_name }} </br> <a href="">{{ result.organisation.foi_email }}</a> </p>
+            </div>
+          {% endif %}
+        </section>
+      {% endif %}
 
       <section id="feedback">
         <div>
