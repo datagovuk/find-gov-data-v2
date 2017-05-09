@@ -50,9 +50,15 @@ const processEsResponse = results =>
 
 router.get('/search-results', function(req, res, next) {
   const query = req.query.q
-  const orgTypes = req.query['org-type']
   const sortBy = req.query['sortby']
   const location = req.query['location']
+  orgTypes = req.query['org-type'] || ''
+
+  // Remove extraneous org-type=_unchecked that appears due to prototype-kit
+  // issue.  We don't want it....
+  if (orgTypes && Array.isArray(orgTypes)) {
+    orgTypes = orgTypes.filter((item)=>{return item != '_unchecked'})
+  }
 
   const shoulds = []
   if (query) shoulds.push(
@@ -90,6 +96,7 @@ router.get('/search-results', function(req, res, next) {
         orgTypes: orgTypes,
         sortBy: ['best', 'recent', 'viewed'].indexOf(sortBy) !== -1 ? sortBy : '',
         location: location,
+        locations: data.locations,
         results: processEsResponse(esResponse)
       })
     }
@@ -106,10 +113,37 @@ router.get('/datasets/:name', function(req, res, next){
   }
 
   esClient.search(esQuery, (esError, esResponse) => {
+    // console.log(processEsResponse(esResponse)[0])
+    var result = processEsResponse(esResponse)[0]
+
+    const groupByDate = function(result){
+      var groups = []
+
+      if (result.resources) {
+        result.resources.forEach(function(datafile){
+          if (datafile['start_date']) {
+            const yearArray = groups.filter(yearObj => yearObj.year == datafile['start_date'].substr(0,4))
+            if (yearArray.length === 0) {
+              var group = {'year': "", 'datafiles':[]}
+              group['year']= datafile['start_date'].substr(0,4)
+              group['datafiles'].push(datafile)
+              groups.push(group)
+            } else {
+              yearArray[0]['datafiles'].push(datafile)
+            }
+          }
+        })
+      }
+      return groups
+    }
+
     if (esError) {
       throw esError
     } else {
-      res.render('dataset', { result: processEsResponse(esResponse)[0] })
+      res.render('dataset', {
+        result: result,
+        groups: groupByDate(result)
+      })
     }
   })
 })

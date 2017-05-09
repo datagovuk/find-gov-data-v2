@@ -29,32 +29,87 @@
         <p> {{ result.notes | truncate(200)}} </p>
       </div>
       <section class="data-links">
-        <h2 class="heading-medium">Data
-          <span class="showHide-open-all">Open all</span>
-        </h2>
-        <div class="breaker"></div>
-        <ul>
-          <li class="showHide">
-            <div class="year-expand">
-              <h3 class="heading-small showHide-control">All data links</h3>
-              <div><span class="expand">+</span></div>
-            </div>
-            <div class="year-datasets showHide-content" style="display: none">
-              <table>
-                <tbody>
-                  {% for datafile in result.resources %}
-                    <tr>
-                      <td class="title">{{ datafile.name }}</td>
-                      <td><a href="">Preview</a></td>
-                      <td><a href="{{ datafile.url }}">Download {{ datafile.format }}</a></td>
-                    </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            </div>
-          </li>
-        </ul>
-        <input class="button" type="submit" value="Download all">
+        {% if groups|length %}
+          <h2 class="heading-medium">Data links
+            <span class="showHide-open-all">Open all</span>
+          </h2>
+          <div class="breaker"></div>
+          <ul>
+            {% for yearGroup in groups %}
+            <li class="showHide">
+              <div class="year-expand showHide-control">
+                <h3 class="heading-small">{{ yearGroup.year }}</h3>
+                <div><span class="expand">+</span></div>
+              </div>
+              <div class="year-datasets showHide-content" style="display: none">
+                <table>
+                  <tr>
+                    <th class="title">Link to the data</th>
+                    <th>Format</th>
+                    <th>Date added</th>
+                  </tr>
+                  <tbody>
+                    {% for datafile in yearGroup.datafiles %}
+                      <tr>
+                        <td class="title"><a href="{{ datafile.url }}">
+                          {% if datafile.name %} {{ datafile.name }}
+                          {% else %} Data Link
+                          {% endif %}
+                        </td>
+                        <td>{{ datafile.format }} (344 KB)</td>
+                        {% if datafile.date_added %}
+                          <td>
+                             {{ datafile.date_added }}
+                          </td>
+                        {% else %}
+                          <td class="no-date-added">
+                            Not available
+                        {% endif %}
+                          </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+                {% endfor %}
+            </li>
+          </ul>
+          <input class="button" type="submit" value="Download all">
+        {% else %}
+          <h2 class="heading-medium">Data</h2>
+          <table>
+            <tr>
+              <th class="title">Link to the data</th>
+              <th>Format</th>
+              <th>Date added</th>
+              <th>File size</th>
+            </tr>
+            <tbody>
+              {% for datafile in result.resources %}
+                <tr>
+                  <td class="title"><a href="{{ datafile.url }}">
+                    {% if datafile.name %} {{ datafile.name }}
+                    {% else %} Data Link
+                    {% endif %}
+                  </td>
+                  <td>{{ datafile.format }}</td>
+                  {% if datafile.date_added %}
+                    <td>
+                       {{ datafile.date_added }}
+                    </td>
+                  {% else %}
+                    <td class="no-date-added">
+                      Not available
+                  {% endif %}
+                    </td>
+                    <td>
+                      347kb
+                    </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% endif %}
       </section>
 
       <section>
@@ -66,14 +121,14 @@
 
       <section>
         <h2 class="heading-medium">
-          Supporting documentation
+          Supporting documents
           <span class="showHide-open-all">Open all</span>
         </h2>
         <div class="breaker"></div>
         <ul>
           <li class="showHide">
-            <div class="year-expand">
-              <h3 class="heading-small showHide-control">All documents</h3>
+            <div class="year-expand showHide-control">
+              <h3 class="heading-small">All documents</h3>
               <div><span class="expand">+</span></div>
             </div>
             <div class="year-datasets showHide-content" style="display: none">
@@ -165,7 +220,7 @@
         </div>
       </section>
     </div>
-    <div class="column-one-third">
+    <div class="column-one-third related-datasets">
       <ul>
         <h3 class="heading-medium related">Related datasets</h3>
         {% for dataset in results %}
