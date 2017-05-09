@@ -50,7 +50,7 @@ const processEsResponse = results =>
 
 router.get('/search-results', function(req, res, next) {
   const query = req.query.q
-  const orgTypes = req.query['org-type']
+  const orgTypes = req.query['org-type'] || ''
   const sortBy = req.query['sortby']
   const location = req.query['location']
 
