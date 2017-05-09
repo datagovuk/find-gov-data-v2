@@ -144,6 +144,7 @@ router.get('/datasets/:name', function(req, res, next){
         result: result,
         groups: groupByDate(result)
       })
+      // console.log(result)
     }
   })
 })
