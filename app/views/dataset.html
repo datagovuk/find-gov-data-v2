@@ -4,17 +4,6 @@
   GOV.UK prototype kit
 {% endblock %}
 
-
-{% block top_search %}
-  <form id="search-form" action="/search-results" method="GET" class="top-search">
-    <fieldset>
-      <div id="search-box">
-        <input id="q" name="q" type="text" placeholder="" class="form-control search" autocomplete="off" value="{{query}}"/><button type="submit" class="search-submit">Find data</button>
-      </div>
-    </fieldset>
-  </form>
-{% endblock %}
-
 {% block content %}
 
 <main id="content" role="main">
@@ -262,7 +251,17 @@
       </section>
     </div>
     <div class="column-one-third related-datasets">
-      <h3 class="heading-medium related">Related datasets</h3>      
+      <h3 class="heading-small related">Search UK Government data</h3>
+      {% block top_search %}
+        <form id="search-form" action="/search-results" method="GET" class="top-search">
+          <fieldset>
+            <div id="search-box">
+              <input id="q" name="q" type="text" placeholder="" class="form-control search" autocomplete="off" value="{{query}}"/><button type="submit" class="search-submit">Find data</button>
+            </div>
+          </fieldset>
+        </form>
+      {% endblock %}
+      <h3 class="heading-small">Related datasets</h3>      
       <ul>
         <li><a href="https://find-gov-data-v2.herokuapp.com/datasets/road-safety-consultation">Road Safety Consultation</a></li>
         <li><a href="https://find-gov-data-v2.herokuapp.com/datasets/railway-performance-usage-and-safety-data">Railway Performance, usage and safety data</a></li>
