@@ -50,7 +50,6 @@ const processEsResponse = results =>
 
 router.get('/search-results', function(req, res, next) {
   const query = req.query.q
-  const sortBy = req.query['sortby']
   const location = req.query['location']
   orgTypes = req.query['org-type'] || ''
 
@@ -59,7 +58,6 @@ router.get('/search-results', function(req, res, next) {
   if (orgTypes && Array.isArray(orgTypes)) {
     orgTypes = orgTypes.filter((item)=>{return item != '_unchecked'})
   }
-
 
   // Copy the query because we don't want to provide a potentially modified
   // version back to the template.
