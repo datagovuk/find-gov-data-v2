@@ -137,6 +137,46 @@ router.get('/search-results', function(req, res, next) {
 })
 
 
+/*
+ * Return a collection of n datasets, similar to the one provided
+ */
+const more_like_this = (dataset, n) => {
+  var like = dataset.title + " " +
+             dataset.summary + " " +
+             dataset.notes + " " +
+             dataset.organisation_name;
+
+  const esQuery = {
+    index: process.env.ES_INDEX,
+    body: {
+      query: {
+        more_like_this: {
+          fields : ["title^3", "summary^3", "notes", "organisation_name^2"],
+          like : like,
+          min_term_freq : 4,
+          max_query_terms : 12
+        }
+      }
+    }
+  }
+
+
+   return esClient.search(esQuery).then(results => {
+      var matches = results.hits.hits
+        .filter(item=>{
+          return item._score > 0.65
+        })
+        .map(item =>{
+          return {
+            name: item._source.name,
+            title: item._source.title,
+            summary: item._source.summary,
+          }
+        })
+        .slice(0, n)
+   })
+}
+
 router.get('/datasets/:name', function(req, res, next){
   const esQuery = {
     index: process.env.ES_INDEX,
@@ -173,8 +213,14 @@ router.get('/datasets/:name', function(req, res, next){
     if (esError) {
       throw esError
     } else {
+      // How useful, a promise that we can't call .done() on to get the value
+      // out.
+      var matches = more_like_this(result, 3)
+      console.log(matches)
+
       res.render('dataset', {
         result: result,
+        related_datasets: matches,
         groups: groupByDate(result)
       })
     }
