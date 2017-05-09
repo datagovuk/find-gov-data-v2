@@ -51,32 +51,61 @@ const processEsResponse = results =>
 router.get('/search-results', function(req, res, next) {
   const query = req.query.q
   const orgTypes = req.query['org-type'] || ''
-  const sortBy = req.query['sortby']
   const location = req.query['location']
 
-  const shoulds = []
-  if (query) shoulds.push(
-    { match: { title: query } },
-    { match: { summary: query } },
-    { match: { description: query } }
-  )
 
-  if (location) shoulds.push(
-    { match: { location1: location } },
-    { match: { location2: location } },
-    { match: { location3: location } }
-  )
+  // Copy the query because we don't want to provide a potentially modified
+  // version back to the template.
+  var query_string = query
+  var sortBy = req.query['sortby']
+  var offset = 0
+  var limit = 10
 
-  const esQuery = {
+  // If there is no query string, we will default to showing the most recent
+  // datasets as we can't have relevance when there is nothing to check
+  // relevance against. At the same time, we want to match everything if the
+  // user has provided no terms so we will search for *
+  if (query_string == ""){
+    sortBy = 'recent'
+    query_string = "*"
+  }
+
+  // TODO: When we have an organisation_type to filter on, we will need to change
+  // the query_string to append " organisation_type:X" where X is the short
+  // name of the organisation. We don't yet have this info in the search index.
+
+
+  var esQuery = {
     index: process.env.ES_INDEX,
     body: {
       query: {
-        bool: {
-          should: shoulds
+        query_string: {
+          query: query_string,
+          fields: [
+                   "summary^2", "title^3", "description^1",
+                   "location1^2", "location2^2", "location3^2",
+                   "_all"
+                  ],
+          default_operator: "and"
         }
-      }
+      },
+      from: offset,
+      size: limit
     }
   }
+
+  // Set the sort field if the user has selected one in the UI, otherwise
+  // we will default to relevance (using _score).  We don't have popularity
+  // scores yet, so we'll cheat and use the name of the dataset
+  switch(sortBy) {
+      case "recent":
+          esQuery.sort = "last_edit_date:desc"
+          break;
+      case "viewed":
+          esQuery.sort = "name:asc"
+          break;
+  }
+
 
   esClient.search(esQuery, (esError, esResponse) => {
     if (esError) {
