@@ -4,6 +4,17 @@
   GOV.UK prototype kit
 {% endblock %}
 
+
+{% block top_search %}
+  <form id="search-form" action="/search-results" method="GET" class="top-search">
+    <fieldset>
+      <div id="search-box">
+        <input id="q" name="q" type="text" placeholder="" class="form-control search" autocomplete="off" value="{{query}}"/><button type="submit" class="search-submit">Find data</button>
+      </div>
+    </fieldset>
+  </form>
+{% endblock %}
+
 {% block content %}
 
 <main id="content" role="main">
