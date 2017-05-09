@@ -23,6 +23,12 @@ $(document).ready(function () {
 
   var showHide = new ShowHide()
   showHide.init()
+
+  AccessibleTypeahead({
+    element: document.querySelector('#location'),
+    id: 'location-typeahead',
+    source: suggest
+  })
 })
 
 var ShowHide = function() {
@@ -81,4 +87,14 @@ function do_switch(previewer, appender, tab){
   $(tab).parent().addClass('active');
   $(document).click();
   return false;
+}
+
+function suggest (query, syncResults) {
+  console.log('suggest');
+  const results = [
+    'France',
+    'Germany',
+    'United Kingdom'
+  ]
+  syncResults(results.filter(result => result.indexOf(query) !== -1))
 }
