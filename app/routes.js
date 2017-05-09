@@ -61,6 +61,11 @@ router.get('/search-results', function(req, res, next) {
   var offset = 0
   var limit = 10
 
+  if (location) {
+    query_string += " " + location
+    query_string = query_string.trim()
+  }
+
   // If there is no query string, we will default to showing the most recent
   // datasets as we can't have relevance when there is nothing to check
   // relevance against. At the same time, we want to match everything if the
