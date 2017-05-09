@@ -50,9 +50,15 @@ const processEsResponse = results =>
 
 router.get('/search-results', function(req, res, next) {
   const query = req.query.q
-  const orgTypes = req.query['org-type'] || ''
   const sortBy = req.query['sortby']
   const location = req.query['location']
+  orgTypes = req.query['org-type'] || ''
+
+  // Remove extraneous org-type=_unchecked that appears due to prototype-kit
+  // issue.  We don't want it....
+  if (orgTypes && Array.isArray(orgTypes)) {
+    orgTypes = orgTypes.filter((item)=>{return item != '_unchecked'})
+  }
 
   const shoulds = []
   if (query) shoulds.push(
