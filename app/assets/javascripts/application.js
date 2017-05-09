@@ -23,6 +23,10 @@ $(document).ready(function () {
 
   var showHide = new ShowHide()
   showHide.init()
+
+  AccessibleTypeahead.enhanceSelectElement({
+    selectElement: document.querySelector('#location')
+  })
 })
 
 var ShowHide = function() {

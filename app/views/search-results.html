@@ -71,7 +71,11 @@
         <label for="location" class="form-label">
           Enter geographical area
         </label>
-        <input class="form-control" id="location" name="location" type="text" value="{{location}}">
+        <select id="location" name="location">
+          {% for location in locations %}
+            <option>{{ location }}</option>
+          {% endfor %}
+        </select>
 
 
         <input class="button" type="submit" value="Filter">
