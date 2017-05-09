@@ -484,13 +484,15 @@ a:focus {
   }
 }
 
+.no-date-added {
+  color: #BFC1C3;
 // design and content changes
 
 .filters input.button {
   margin-top: 20px;
 }
 
-.filters input.button.secondary {
+.filters .button.secondary {
   background: none;
   color: $govuk-blue;
   text-decoration: underline;
