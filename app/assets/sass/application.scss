@@ -553,12 +553,14 @@ h3.heading-medium.related {
 .contact {
   .column-one-half {
     padding-left: 0;
+    &.foi {
+      padding-right: 0;
+    }
   }
-
 }
 
 .related-datasets {
-  
+
   h3:first-of-type {
     margin-top: 134px;
     padding-top: 30px;
