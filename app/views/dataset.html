@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block page_title %}
-  GOV.UK prototype kit
+  Find Data Alpha
 {% endblock %}
 
 {% block content %}
@@ -127,43 +127,35 @@
         Coverage is for England Scotland and Wales and was added on the 20/09/2011. </p>
       </section>
 
-      <section>
-        <h2 class="heading-medium">
-          Supporting documents
-          <span class="showHide-open-all">Open all</span>
-        </h2>
-        <div class="breaker"></div>
-        <ul>
-          <li class="showHide">
-            <div class="year-expand showHide-control">
-              <h3 class="heading-small">All documents</h3>
-              <div><span class="expand">+</span></div>
-            </div>
-            <div class="year-datasets showHide-content" style="display: none">
-              <table>
-                <thead>
+      {% if result.documentation | length %}
+        <section>
+          <h2 class="heading-medium">
+            Supporting documents
+          </h2>
+
+            <table>
+              <thead>
+                <tr>
+                  <th class="title">Link to the document</th>
+                  <th>Format</th>
+                  <th>Date added</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for datafile in result.documentation %}
                   <tr>
-                    <th class="title">Document link</th>
-                    <th>Format</th>
-                    <th>Date added</th>
+                    <td class="title">
+                      <a href="{{ datafile.url }}">{{ datafile.name }}</a>
+                    </td>
+                    <td>{{ datafile.format or "n/a" }}</td>
+                    <td>{{ datafile.start_date or "n/a" }}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {% for datafile in result.documentation %}
-                    <tr>
-                      <td class="title">
-                        <a href="{{ datafile.url }}">{{ datafile.name }}</a>
-                      </td>
-                      <td>{{ datafile.format or "n/a" }}</td>
-                      <td>{{ datafile.start_date or "n/a" }}</td>
-                    </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            </div>
-          </li>
-        </ul>
-      </section>
+                {% endfor %}
+              </tbody>
+            </table>
+
+        </section>
+      {% endif %}
 
       {% if result.organisation.contact_name or result.organisation.contact_email %}
         <section class = "contact">
@@ -177,7 +169,7 @@
             <p>{{ result.organisation.contact_name }} </br> <a href="">{{ result.organisation.contact_email }}</a> </p>
           </div>
           {% if result.organisation.foi_name or result.organisation.foi_email %}
-            <div class="column-one-half">
+            <div class="column-one-half foi">
               <h3 class="heading-small">
                 Freedom of Information (FOI) requests
               </h3>
@@ -261,7 +253,7 @@
           </fieldset>
         </form>
       {% endblock %}
-      <h3 class="heading-small">Related datasets</h3>      
+      <h3 class="heading-small">Related datasets</h3>
       <ul>
         <li><a href="https://find-gov-data-v2.herokuapp.com/datasets/road-safety-consultation">Road Safety Consultation</a></li>
         <li><a href="https://find-gov-data-v2.herokuapp.com/datasets/railway-performance-usage-and-safety-data">Railway Performance, usage and safety data</a></li>
