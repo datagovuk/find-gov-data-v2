@@ -25,11 +25,15 @@ $(document).ready(function () {
   showHide.init()
 
   var locationSelect = document.querySelector('#location');
-    if (locationSelect) {
-      AccessibleTypeahead.enhanceSelectElement({
-        selectElement: document.querySelector('#location')
-      })
-    }
+  if (locationSelect) {
+    AccessibleTypeahead.enhanceSelectElement({
+      selectElement: document.querySelector('#location')
+    })
+  }
+
+  new FoldableText('.summary', 200)
+    .init()
+
 })
 
 var ShowHide = function() {
@@ -89,4 +93,45 @@ function do_switch(previewer, appender, tab){
   $(tab).parent().addClass('active');
   $(document).click();
   return false;
+}
+
+// ==== Foldable text ======================
+
+var FoldableText = function (selector, size) {
+  this.selector = selector
+  this.els = $(this.selector)
+  this.minSize = size
+  return this
+}
+
+FoldableText.prototype.toggle = function(event) {
+  const $target = $(event.target)
+  if ($target.data('folded') === 'folded') {
+    $target.text('Hide full summary')
+    $target.prev(this.selector).height($target.data('height'))
+    $target.data('folded', 'unfolded')
+  } else {
+    $target.text('View full summary')
+    $target.prev(this.selector).height(this.minSize)
+    $target.data('folded', 'folded')
+  }
+}
+
+FoldableText.prototype.init = function() {
+  $.each(this.els, (idx, el) => {
+    const $el = $(el)
+    const originalHeight = $el.height()
+    if (originalHeight > this.minSize) {
+      $el
+        .height(this.minSize)
+        .css('overflow', 'hidden')
+        .css('margin-bottom', 0)
+        .wrap('<p class="fold-outer"></p>')
+
+      $el.parent('p.fold-outer')
+        .append('<div class="fold" data-folded="folded" data-height="'+originalHeight+'">View full summary</div>')
+
+      $el.next('.fold').on('click', this.toggle.bind(this));
+    }
+  })
 }
