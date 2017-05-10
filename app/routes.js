@@ -51,6 +51,7 @@ const processEsResponse = results =>
 router.get('/search-results', function(req, res, next) {
   const query = req.query.q
   const location = req.query['location']
+  const page = req.query.page || 1
   orgTypes = req.query['org-type'] || ''
 
   // Remove extraneous org-type=_unchecked that appears due to prototype-kit
@@ -63,8 +64,8 @@ router.get('/search-results', function(req, res, next) {
   // version back to the template.
   var query_string = query
   var sortBy = req.query['sortby']
-  var offset = 0
   var limit = 10
+  var offset = (page * limit) - limit
 
   if (location) {
     query_string += " " + location
@@ -121,6 +122,10 @@ router.get('/search-results', function(req, res, next) {
     if (esError) {
       throw esError
     } else {
+
+      var total_results = esResponse.hits.total
+      var page_count = Math.ceil(total_results / 10)
+
       res.render('search-results', {
         central: orgTypes.indexOf('central-gov') !== -1,
         local: orgTypes.indexOf('local-auth') !== -1,
@@ -131,7 +136,9 @@ router.get('/search-results', function(req, res, next) {
         location: location,
         locations: data.locations,
         results: processEsResponse(esResponse),
-        numResults: esResponse.hits.total
+        numResults: total_results,
+        pageCount: page_count,
+        currentPage: page
       })
     }
   })
