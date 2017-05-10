@@ -36,16 +36,51 @@ const processEsResponse = results =>
         .filter(loc => loc)
         .join(',')
       newResult.last_updated = day + ' ' + month + ' ' + year
-      if (newResult.update_frequency == 'yearly') {
-        var int = Number(interval)
-        year_int += 1
-        newResult.expected_update = day + ' ' + month + ' ' + year_int
-      }
-      else if (newResult.update_frequency == '') {
-        newResult.expected_update = 'Not known'
-      }
-       return newResult
+      newResult.next_updated = UpdateDate(newResult.update_frequency, day, newResult.last_edit_date.substr(5,2), year )
+      return newResult
     })
+
+
+// Calculates the expected update date, based on frequency selected and the last time the dataset
+// was updated. Doesn't yet handle weekly updates.
+
+function UpdateDate(frequency, day, month, year){
+  var yearWords = ['annual','annually', 'yearly', 'year']
+  var quarterlyWords = ['quarterly', 'quarter', 'four months', '4 months']
+  var monthlyWords = ['monthly', 'month']
+  var int_year = Number(year)
+  var int_month = Number(month)
+  var updatedMonth
+  var updatedYear
+  var nextUpdated = day + ' ' + updatedMonth + ' ' + updatedYear
+
+  function monthUpdates(int_month, frequency) {
+    if (int_month + frequency > 12) {
+      updatedYear = int_year + 1
+      updatedMonth = `0 ${(int_month + frequency)% 12}`
+      nextUpdated = day + ' ' + monthNames[updatedMonth] + ' ' + updatedYear
+    } else if (int_month + frequency == 12) {
+      nextUpdated = day + ' ' + monthNames['12'] + ' ' + year
+    } else {
+      updatedMonth = `0+ ${(int_month + frequency)}`
+      nextUpdated = day + ' ' + monthNames[updatedMonth] + ' ' + year
+    }
+    return nextUpdated
+  }
+
+  if (yearWords.includes(frequency.toLowerCase())) {
+    updatedYear = int_year + 1
+    nextUpdated = day + ' ' + monthNames[month] + ' ' + updatedYear
+  } else if (quarterlyWords.includes(frequency.toLowerCase())) {
+    monthUpdates(int_month, 4)
+  } else if (monthlyWords.includes(frequency.toLowerCase())) {
+    monthUpdates(int_month, 1)
+  } else {
+    nextUpdated = ''
+  }
+  return nextUpdated
+}
+
 
 
 router.get('/search-results', function(req, res, next) {
@@ -172,7 +207,7 @@ const get_more_like_this = (dataset, n) => {
     esClient.search(esQuery, (esError, results) => {
       var matches = results.hits.hits
         .filter(item=>{
-          return item._score > 0.65
+          return item._score > 0.65 && item._id != dataset.id
         })
         .map(item =>{
           return {
@@ -197,7 +232,6 @@ router.get('/datasets/:name', function(req, res, next) {
 
   esClient.search(esQuery, (esError, esResponse) => {
     var result = processEsResponse(esResponse)[0]
-
     const cmpStrings = (s1, s2) => s1 < s2 ? 1 : (s1 > s2 ? -1 : 0)
 
     const groupByDate = function(result){
