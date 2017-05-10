@@ -120,6 +120,7 @@ FoldableText.prototype.toggle = function(event) {
 FoldableText.prototype.init = function() {
   $.each(this.els, (idx, el) => {
     const $el = $(el)
+    $el.css('max-height','100000px')
     const originalHeight = $el.height()
     if (originalHeight > this.minSize) {
       $el
