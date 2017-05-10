@@ -223,7 +223,7 @@
     <div class="column-one-third related-datasets">
       <ul>
         <h3 class="heading-medium related">Related datasets</h3>
-        {% for dataset in results %}
+        {% for dataset in related_datasets %}
           <li><a href="/datasets/{{ dataset.name }}">{{ dataset.title | truncate(65) }}</a></li>
         {% endfor %}
       </ul>

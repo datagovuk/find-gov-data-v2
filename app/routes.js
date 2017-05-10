@@ -140,7 +140,7 @@ router.get('/search-results', function(req, res, next) {
 /*
  * Return a collection of n datasets, similar to the one provided
  */
-const more_like_this = (dataset, n) => {
+const get_more_like_this = (dataset, n) => {
   var like = dataset.title + " " +
              dataset.summary + " " +
              dataset.notes + " " +
@@ -160,8 +160,8 @@ const more_like_this = (dataset, n) => {
     }
   }
 
-
-   return esClient.search(esQuery).then(results => {
+  return new Promise((resolve, reject) => {
+    esClient.search(esQuery, (esError, results) => {
       var matches = results.hits.hits
         .filter(item=>{
           return item._score > 0.65
@@ -174,10 +174,12 @@ const more_like_this = (dataset, n) => {
           }
         })
         .slice(0, n)
-   })
+        resolve(matches)
+    })
+  })
 }
 
-router.get('/datasets/:name', function(req, res, next){
+router.get('/datasets/:name', function(req, res, next) {
   const esQuery = {
     index: process.env.ES_INDEX,
     body: {
@@ -186,14 +188,13 @@ router.get('/datasets/:name', function(req, res, next){
   }
 
   esClient.search(esQuery, (esError, esResponse) => {
-    // console.log(processEsResponse(esResponse)[0])
     var result = processEsResponse(esResponse)[0]
 
-    const groupByDate = function(result){
+    const groupByDate = function(result) {
       var groups = []
 
       if (result.resources) {
-        result.resources.forEach(function(datafile){
+        result.resources.forEach(function(datafile) {
           if (datafile['start_date']) {
             const yearArray = groups.filter(yearObj => yearObj.year == datafile['start_date'].substr(0,4))
             if (yearArray.length === 0) {
@@ -213,17 +214,15 @@ router.get('/datasets/:name', function(req, res, next){
     if (esError) {
       throw esError
     } else {
-      // How useful, a promise that we can't call .done() on to get the value
-      // out.
-      var matches = more_like_this(result, 3)
-      console.log(matches)
-
-      res.render('dataset', {
-        result: result,
-        related_datasets: matches,
-        groups: groupByDate(result)
-      })
-    }
+      get_more_like_this(result, 3)
+        .then( matches => {
+          res.render('dataset', {
+            result: result,
+            related_datasets: matches,
+            groups: groupByDate(result)
+          })
+        })
+     }
   })
 })
 
