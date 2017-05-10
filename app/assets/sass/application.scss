@@ -576,3 +576,14 @@ input.form-control.search {
   width: 100%;
   margin-bottom: 10px;
 }
+
+.fold-outer {
+  margin-bottom: 10px;
+}
+
+.fold {
+  margin-top: 10px;
+  color: $link-colour;
+  cursor: pointer;
+  text-decoration: underline;
+}
