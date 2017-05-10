@@ -19,10 +19,12 @@
           <dd><a href="">{{ result.organisation.title }}</a></dd>
           <dt>Last updated:</dt>
           <dd>{{ result.last_updated }}</dd>
-
+        {% if result.next_updated %}
           <dt>Expected update:</dt>
-          <dd>{{ result.expected_update }}</dd>
+          <dd>{{ result.next_updated }}</dd>
+        {% endif %}
         </dl>
+
         <h3 class="heading-small">
             Summary
         </h3>
@@ -82,6 +84,7 @@
           <input class="button" type="submit" value="Download all">
 <!-- no accordions for other datasets -->
         {% else %}
+          {% if result.resources | length %}
           <h2 class="heading-medium">Data</h2>
           <table>
             <tr>
@@ -113,6 +116,7 @@
               {% endfor %}
             </tbody>
           </table>
+          {% endif %}
         {% endif %}
       </section>
 
@@ -253,12 +257,14 @@
           </fieldset>
         </form>
       {% endblock %}
-      <h3 class="heading-small">Related datasets</h3>
-      <ul>
-        {% for dataset in related_datasets %}
-          <li><a href="/datasets/{{ dataset.name }}">{{ dataset.title | truncate(65) }}</a></li>
-        {% endfor %}
-      </ul>
+      {% if related_datasets | length %}
+        <h3 class="heading-small">Related datasets</h3>
+        <ul>
+          {% for dataset in related_datasets %}
+            <li><a href="/datasets/{{ dataset.name }}">{{ dataset.title | truncate(65) }}</a></li>
+          {% endfor %}
+        </ul>
+      {% endif %}
     </div>
   </div>
 </main>
