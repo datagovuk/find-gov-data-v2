@@ -21,7 +21,7 @@
   </div>
   <div class="grid-row">
     <div class="column-two-thirds">
-      <span class="bold-small">{{ numResults }}</span> results found for <span class="bold-small">'{{ query }}'</span>
+      <span class="bold-small">{{ numResults }}</span> results found {% if query %}for <span class="bold-small">'{{ query }}'{% endif%}</span>
     </div>
   </div>
   <div class="grid-row">
