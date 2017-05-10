@@ -165,7 +165,7 @@ const get_more_like_this = (dataset, n) => {
     esClient.search(esQuery, (esError, results) => {
       var matches = results.hits.hits
         .filter(item=>{
-          return item._score > 0.65
+          return item._score > 0.65 && item._id != dataset.id
         })
         .map(item =>{
           return {
