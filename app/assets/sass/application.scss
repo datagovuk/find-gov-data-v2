@@ -45,7 +45,7 @@ $path: "/public/images/";
 
 .box {
   background: #F8F8F8;
-  padding: 10px 30px;
+  padding: 25px 30px 15px 30px;
 }
 
 .toggle {
@@ -548,4 +548,31 @@ main.results-page#content .grid-row.masthead {
 
 h3.heading-medium.related {
   margin-top: 58px;
+}
+
+.contact {
+  .column-one-half {
+    padding-left: 0;
+    &.foi {
+      padding-right: 0;
+    }
+  }
+}
+
+.related-datasets {
+
+  h3:first-of-type {
+    margin-top: 134px;
+    padding-top: 30px;
+    border-top: 10px solid #F8F8F8;
+  }
+}
+
+.related-datasets ul li {
+  margin-bottom: 10px;
+}
+
+input.form-control.search {
+  width: 100%;
+  margin-bottom: 10px;
 }
