@@ -149,6 +149,8 @@ router.get('/datasets/:name', function(req, res, next){
     // console.log(processEsResponse(esResponse)[0])
     var result = processEsResponse(esResponse)[0]
 
+    const cmpStrings = (s1, s2) => s1 < s2 ? 1 : (s1 > s2 ? -1 : 0)
+
     const groupByDate = function(result){
       var groups = []
 
@@ -167,6 +169,13 @@ router.get('/datasets/:name', function(req, res, next){
         }
       })
       return groups
+        .map(group=> {
+          var newGroup = group
+          newGroup.datafiles =
+            group.datafiles.sort((g1, g2) => cmpStrings(g1.start_date, g2.start_date))
+          return newGroup;
+        })
+        .sort((g1, g2) => cmpStrings(g1.year, g2.year))
     }
 
     if (esError) {
