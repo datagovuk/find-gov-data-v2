@@ -138,7 +138,49 @@ router.get('/search-results', function(req, res, next) {
 })
 
 
-router.get('/datasets/:name', function(req, res, next){
+/*
+ * Return a collection of n datasets, similar to the one provided
+ */
+const get_more_like_this = (dataset, n) => {
+  var like = dataset.title + " " +
+             dataset.summary + " " +
+             dataset.notes + " " +
+             dataset.organisation_name;
+
+  const esQuery = {
+    index: process.env.ES_INDEX,
+    body: {
+      query: {
+        more_like_this: {
+          fields : ["title^3", "summary^3", "notes", "organisation_name^2"],
+          like : like,
+          min_term_freq : 4,
+          max_query_terms : 12
+        }
+      }
+    }
+  }
+
+  return new Promise((resolve, reject) => {
+    esClient.search(esQuery, (esError, results) => {
+      var matches = results.hits.hits
+        .filter(item=>{
+          return item._score > 0.65
+        })
+        .map(item =>{
+          return {
+            name: item._source.name,
+            title: item._source.title,
+            summary: item._source.summary,
+          }
+        })
+        .slice(0, n)
+        resolve(matches)
+    })
+  })
+}
+
+router.get('/datasets/:name', function(req, res, next) {
   const esQuery = {
     index: process.env.ES_INDEX,
     body: {
@@ -147,7 +189,6 @@ router.get('/datasets/:name', function(req, res, next){
   }
 
   esClient.search(esQuery, (esError, esResponse) => {
-    // console.log(processEsResponse(esResponse)[0])
     var result = processEsResponse(esResponse)[0]
 
     const cmpStrings = (s1, s2) => s1 < s2 ? 1 : (s1 > s2 ? -1 : 0)
@@ -182,12 +223,15 @@ router.get('/datasets/:name', function(req, res, next){
     if (esError) {
       throw esError
     } else {
-      res.render('dataset', {
-        result: result,
-        groups: groupByDate(result)
-      })
-      // console.log(result)
-    }
+      get_more_like_this(result, 3)
+        .then( matches => {
+          res.render('dataset', {
+            result: result,
+            related_datasets: matches,
+            groups: groupByDate(result)
+          })
+        })
+     }
   })
 })
 
