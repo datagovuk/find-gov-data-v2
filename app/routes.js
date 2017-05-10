@@ -152,21 +152,20 @@ router.get('/datasets/:name', function(req, res, next){
     const groupByDate = function(result){
       var groups = []
 
-      if (result.resources) {
-        result.resources.forEach(function(datafile){
-          if (datafile['start_date']) {
-            const yearArray = groups.filter(yearObj => yearObj.year == datafile['start_date'].substr(0,4))
-            if (yearArray.length === 0) {
-              var group = {'year': "", 'datafiles':[]}
-              group['year']= datafile['start_date'].substr(0,4)
-              group['datafiles'].push(datafile)
-              groups.push(group)
-            } else {
-              yearArray[0]['datafiles'].push(datafile)
-            }
+
+      result.resources.forEach(function(datafile){
+        if (datafile['start_date']) {
+          const yearArray = groups.filter(yearObj => yearObj.year == datafile['start_date'].substr(0,4))
+          if (yearArray.length === 0) {
+            var group = {'year': "", 'datafiles':[]}
+            group['year']= datafile['start_date'].substr(0,4)
+            group['datafiles'].push(datafile)
+            groups.push(group)
+          } else {
+            yearArray[0]['datafiles'].push(datafile)
           }
-        })
-      }
+        }
+      })
       return groups
     }
 
