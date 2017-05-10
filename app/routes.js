@@ -150,25 +150,33 @@ router.get('/datasets/:name', function(req, res, next){
     // console.log(processEsResponse(esResponse)[0])
     var result = processEsResponse(esResponse)[0]
 
+    const cmpStrings = (s1, s2) => s1 < s2 ? 1 : (s1 > s2 ? -1 : 0)
+
     const groupByDate = function(result){
       var groups = []
 
-      if (result.resources) {
-        result.resources.forEach(function(datafile){
-          if (datafile['start_date']) {
-            const yearArray = groups.filter(yearObj => yearObj.year == datafile['start_date'].substr(0,4))
-            if (yearArray.length === 0) {
-              var group = {'year': "", 'datafiles':[]}
-              group['year']= datafile['start_date'].substr(0,4)
-              group['datafiles'].push(datafile)
-              groups.push(group)
-            } else {
-              yearArray[0]['datafiles'].push(datafile)
-            }
+
+      result.resources.forEach(function(datafile){
+        if (datafile['start_date']) {
+          const yearArray = groups.filter(yearObj => yearObj.year == datafile['start_date'].substr(0,4))
+          if (yearArray.length === 0) {
+            var group = {'year': "", 'datafiles':[]}
+            group['year']= datafile['start_date'].substr(0,4)
+            group['datafiles'].push(datafile)
+            groups.push(group)
+          } else {
+            yearArray[0]['datafiles'].push(datafile)
           }
-        })
-      }
+        }
+      })
       return groups
+        .map(group=> {
+          var newGroup = group
+          newGroup.datafiles =
+            group.datafiles.sort((g1, g2) => cmpStrings(g1.start_date, g2.start_date))
+          return newGroup;
+        })
+        .sort((g1, g2) => cmpStrings(g1.year, g2.year))
     }
 
     if (esError) {
