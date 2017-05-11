@@ -57,12 +57,12 @@ function UpdateDate(frequency, day, month, year){
   function monthUpdates(int_month, frequency) {
     if (int_month + frequency > 12) {
       updatedYear = int_year + 1
-      updatedMonth = `0 ${(int_month + frequency)% 12}`
+      updatedMonth = `0${(int_month + frequency)% 12}`
       nextUpdated = day + ' ' + monthNames[updatedMonth] + ' ' + updatedYear
     } else if (int_month + frequency == 12) {
       nextUpdated = day + ' ' + monthNames['12'] + ' ' + year
     } else {
-      updatedMonth = `0+ ${(int_month + frequency)}`
+      updatedMonth = `0${(int_month + frequency)}`
       nextUpdated = day + ' ' + monthNames[updatedMonth] + ' ' + year
     }
     return nextUpdated
